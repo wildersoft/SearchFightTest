@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SearchFight.Data\SearchFight.Data.csproj" />
+    <ProjectReference Include="..\SearchFight.Model\SearchFight.Model.csproj" />
   </ItemGroup>
 
 </Project>

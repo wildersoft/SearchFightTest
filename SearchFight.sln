@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchFight.Api", "SearchFi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchFight.Data", "SearchFight.Data\SearchFight.Data.csproj", "{3793372E-7987-4B81-9D01-84D4C5D6B61B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Model", "SearchFight.Model\SearchFight.Model.csproj", "{A7B2FBB2-BBB5-4777-8633-623FD38658BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{3793372E-7987-4B81-9D01-84D4C5D6B61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3793372E-7987-4B81-9D01-84D4C5D6B61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3793372E-7987-4B81-9D01-84D4C5D6B61B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7B2FBB2-BBB5-4777-8633-623FD38658BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7B2FBB2-BBB5-4777-8633-623FD38658BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7B2FBB2-BBB5-4777-8633-623FD38658BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7B2FBB2-BBB5-4777-8633-623FD38658BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

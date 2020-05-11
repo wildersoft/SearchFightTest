@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Searchfight.BusinessLogic\SearchFight.BusinessLogic.csproj" />
+    <ProjectReference Include="..\SearchFight.Model\SearchFight.Model.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

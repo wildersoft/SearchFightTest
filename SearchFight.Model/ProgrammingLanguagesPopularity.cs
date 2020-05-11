@@ -1,4 +1,4 @@
-﻿namespace SearchFight.BusinessLogic.Model
+﻿namespace SearchFight.Model
 {
     public class ProgrammingLanguagesPopularity
     {

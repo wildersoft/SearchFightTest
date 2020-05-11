@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SearchFight.BusinessLogic.Model
+namespace SearchFight.Model
 {
     public class SearchResult
     {

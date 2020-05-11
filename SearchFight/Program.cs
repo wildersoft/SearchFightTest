@@ -8,12 +8,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 
 using Newtonsoft.Json;
 
-using SearchFight.BusinessLogic.Model;
+using SearchFight.Model;
 
 namespace SearchFight
 {
@@ -30,7 +29,6 @@ namespace SearchFight
         {
             Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e)
             {
-                Console.WriteLine("preparing to exit...");
                 e.Cancel = true;
                 keepRunning = false;
                 Environment.Exit(0);
@@ -51,7 +49,7 @@ namespace SearchFight
             while (keepRunning)
             {
                 List<SearchResult> results = Search(ref args);
-
+                //group results to single line
                 var groupResults = results.GroupBy(item => item.ProgrammingLanguage,
                     (key, g) => new
                     {
@@ -63,15 +61,13 @@ namespace SearchFight
                     item => new
                     {
                         item.ProgrammingLanguage,
-                        Results = item.SearchEngineRating
-                            .Select(subItem => $"{subItem.SearchEngine} : {subItem.Rating}")
-                            .Join(" ")
+                        Results = string.Join(" ", item.SearchEngineRating.Select(subItem => $"{subItem.SearchEngine} : {subItem.Rating}").ToArray())
                     }
                 )
                 .ToList();
 
                 Console.WriteLine("------------------Results------------------");
-
+                //print group results
                 groupResults.ForEach(
                     item =>
                     {
@@ -99,7 +95,7 @@ namespace SearchFight
                         Rating = item.Key.Rating
                     })
                     .ToList();
-
+                //print programming language winner
                 searchEngineWinners.ForEach(item => {
                     Console.WriteLine($"{item.SearchEngine} winner: {item.ProgrammingLanguage}");
                 });
@@ -107,9 +103,8 @@ namespace SearchFight
                 string totalWinner = searchEngineWinners
                     .SingleOrDefault(item => item.Rating == searchEngineWinners.Max(subItem => subItem.Rating))
                         .ProgrammingLanguage;
-
+                //printing total winner
                 Console.WriteLine($"Total winner: {totalWinner}");
-
                 Console.WriteLine("------------------End------------------");
                 Console.WriteLine(string.Empty);
             }
@@ -122,21 +117,22 @@ namespace SearchFight
         /// <returns></returns>
         private static List<SearchResult> Search(ref string[] args)
         {
-            string[] results = null;
+            string[] results = { };
             List<SearchResult> result;
 
             if (args == null || args.Length == 0)
             {
-                Console.WriteLine("Enter a program language for search...");
-                results = splitParameters(Console.ReadLine());
+                Console.WriteLine("Enter some programming languages for search the popularity...");
+                string newParams = Console.ReadLine();
+                results = splitParameters(newParams);
+                result = SendRequest(results).Result;
             }
             else
             {
-                results = splitParameters(args);
+                result = SendRequest(args).Result;
                 args = null;
             }
 
-            result = SendRequest(results).Result;
             return result;
         }
 
@@ -145,11 +141,11 @@ namespace SearchFight
         /// </summary>
         /// <param name="args">contains the programming languages</param>
         /// <returns>List of results</returns>
-        static async Task<List<SearchResult>> SendRequest(string[] args)
+        private static async Task<List<SearchResult>> SendRequest(string[] args)
         {
             string serialisedData = JsonConvert.SerializeObject(args);
-            var content = new StringContent(serialisedData, Encoding.UTF8, "application/json");
-            HttpResponseMessage responseMessage = await httpClient.PostAsync($"SearchFight/Search", content);
+            HttpContent content = new StringContent(serialisedData, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = await httpClient.PostAsync("SearchFight/Search", content);
 
             if (responseMessage == null || responseMessage.StatusCode != HttpStatusCode.OK)
             {
@@ -167,7 +163,7 @@ namespace SearchFight
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns>call to overload method</returns>
-        public static string[] splitParameters(string[] parameters)
+        private static string[] splitParameters(string[] parameters)
         {
             string result = string.Join(" ", parameters);
             return splitParameters(result);
@@ -178,7 +174,7 @@ namespace SearchFight
         /// </summary>
         /// <param name="parameters">single-line parameters with programming languages</param>
         /// <returns>array of programming languages</returns>
-        public static string[] splitParameters(string parameters)
+        private static string[] splitParameters(string parameters)
         {
             Regex re = new Regex("(?<=\")[^\"]*(?=\")|[^\" ]+");
             var result = re.Matches(parameters).Cast<Match>().Select(m => m.Value).ToArray();

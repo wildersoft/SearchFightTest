@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Searchfight.BusinessLogic\SearchFight.BusinessLogic.csproj" />
+    <ProjectReference Include="..\SearchFight.Model\SearchFight.Model.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

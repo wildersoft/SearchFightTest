@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore.Internal;
 
-using SearchFight.BusinessLogic.Model;
+using SearchFight.Model;
 using SearchFight.Data;
 
 namespace SearchFight.BusinessLogic
@@ -19,20 +19,11 @@ namespace SearchFight.BusinessLogic
             this.context = searchfighterContext;
         }
 
-        public List<Model.SearchEngines> GetSearchEngines()
-        {
-            var results = context.SearchEngines
-                .Select(item => new Model.SearchEngines() { SearchEngineID = item.SearchEngineID, Name = item.Name })
-                .ToList();
-
-            return results;
-        }
-
         public Task<IEnumerable<SearchResult>> SearchEngines(params string[] languages)
         {
+            //recovering data by languages
             var results = context.ProgrammingLanguagesPopularity
-                .Join
-                (
+                .Join(
                     context.ProgrammingLanguages,
                     left => left.ProgrammingLanguageID,
                     right => right.ProgrammingLanguageID,
@@ -43,8 +34,7 @@ namespace SearchFight.BusinessLogic
                         ProgrammingLanguages = right
                     }
                 )
-                .Join
-                (
+                .Join(
                     context.SearchEngines,
                     left => left.SearchEngineID,
                     right => right.SearchEngineID,
