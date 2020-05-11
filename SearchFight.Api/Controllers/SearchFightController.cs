@@ -18,20 +18,12 @@ namespace SearchFighter.Api.Controllers
     [Route("[controller]")]
     public class SearchFightController : ControllerBase
     {
-        private readonly ILogger<SearchFightController> _logger;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(SearchFightController));
         private readonly ISearch _search;
 
-        public SearchFightController(ILogger<SearchFightController> logger, ISearch search)
+        public SearchFightController(ISearch search)
         {
-            _logger = logger;
             _search = search;
-        }
-
-        [HttpGet]
-        public ActionResult Index()
-        {
-            string result = "algo";
-            return Ok(result);
         }
 
         [HttpPost]
@@ -51,7 +43,7 @@ namespace SearchFighter.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex.Message);
+                log.Warn(ex);
                 return NotFound();
             }
         }
@@ -72,6 +64,7 @@ namespace SearchFighter.Api.Controllers
             }
             catch (Exception ex)
             {
+                log.Warn(ex);
                 return null;
             }
         }
