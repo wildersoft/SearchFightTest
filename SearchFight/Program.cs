@@ -125,7 +125,7 @@ namespace SearchFight
             }
             catch (Exception ex)
             {
-                Console.WriteLine("some problem was found, please try later");
+                Console.WriteLine("A problem was found, please try later");
                 log.Warn(ex);
             }
         }

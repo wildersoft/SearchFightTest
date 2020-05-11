@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 using SearchFight.BusinessLogic;
 
@@ -45,27 +39,6 @@ namespace SearchFighter.Api.Controllers
             {
                 log.Warn(ex);
                 return NotFound();
-            }
-        }
-
-        public string GetJsonFromBody()
-        {
-            try
-            {
-                if (!this.Request.ContentLength.HasValue)
-                {
-                    return null;
-                }
-                int len = (int)(this.Request.ContentLength ?? 0);
-                byte[] buff = new byte[len];
-                this.Request.Body.Read(buff, 0, len);
-                string result = System.Text.Encoding.Default.GetString(buff);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                log.Warn(ex);
-                return null;
             }
         }
     }
